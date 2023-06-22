@@ -26,7 +26,7 @@ function App() {
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
   };
-
+console.log();
   return (
     <React.Fragment>
       <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
