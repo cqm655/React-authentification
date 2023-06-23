@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -36,7 +37,10 @@ const Login = (props) => {
     value: "",
     isValid: false,
   });
-// use to avoid unnecessary efect execution
+
+  const ctx = useContext(AuthContext);
+
+  // use to avoid unnecessary efect execution
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
 
@@ -74,7 +78,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    ctx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -83,8 +87,7 @@ const Login = (props) => {
         <div
           className={`${classes.control} ${
             emailState.isValid === false ? classes.invalid : ""
-          }`}
-        >
+          }`}>
           <label htmlFor="email">E-Mail</label>
           <input
             type="email"
@@ -97,8 +100,7 @@ const Login = (props) => {
         <div
           className={`${classes.control} ${
             passwordState.isValid === false ? classes.invalid : ""
-          }`}
-        >
+          }`}>
           <label htmlFor="password">Password</label>
           <input
             type="password"
